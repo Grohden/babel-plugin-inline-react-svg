@@ -33,7 +33,6 @@ export default declare(({
     const PROPS_NAME = SVG_DEFAULT_PROPS_CODE ? 'overrides' : 'props';
 
     const namedTemplate = `
-      ${SVG_DEFAULT_PROPS_CODE ? '' : ''}
       var SVG_NAME = function SVG_NAME(PROPS_NAME) { ${defaultProps} return SVG_CODE; };
       ${SVG_DEFAULT_PROPS_CODE && EMIT_DEPRECATED_DEFAULT_PROPS ? 'SVG_NAME.defaultProps = SVG_DEFAULT_PROPS_CODE;' : ''}
       ${IS_EXPORT ? 'export { SVG_NAME };' : ''}
