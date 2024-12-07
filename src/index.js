@@ -46,11 +46,17 @@ export default declare(({
 
     if (SVG_NAME !== 'default') {
       return template(namedTemplate)({
-        SVG_NAME, SVG_CODE, SVG_DEFAULT_PROPS_CODE, PROPS_NAME,
+        SVG_NAME,
+        SVG_CODE,
+        SVG_DEFAULT_PROPS_CODE,
+        PROPS_NAME,
       });
     }
     return template(anonymousTemplate)({
-      SVG_CODE, SVG_DEFAULT_PROPS_CODE, EXPORT_FILENAME, PROPS_NAME,
+      SVG_CODE,
+      SVG_DEFAULT_PROPS_CODE,
+      EXPORT_FILENAME,
+      PROPS_NAME,
     });
   };
 
