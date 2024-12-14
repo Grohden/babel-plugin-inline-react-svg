@@ -19,8 +19,8 @@ function assertMatchImport(name, matchRegex) {
 const assertReactImport = assertMatchImport('React', () => /import React from ['"]react['"]/g);
 
 const assertObjectAssignImport = assertMatchImport(
-  'object.assign/shim',
-  () => /import objectAssignShim from ['"]object.assign\/shim['"]/g,
+  'object.assign/polyfill',
+  () => /import objectAssignPolyfill from ['"]object.assign\/polyfill['"]/g,
 );
 
 function assertDefaultProps(shouldExist, result) {

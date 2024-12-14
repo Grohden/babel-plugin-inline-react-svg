@@ -28,7 +28,7 @@ export default declare(({
     EMIT_DEPRECATED_DEFAULT_PROPS,
   }) => {
     const defaultProps = SVG_DEFAULT_PROPS_CODE
-      ? 'var props = objectAssignShim()({}, SVG_DEFAULT_PROPS_CODE, overrides);'
+      ? 'var props = objectAssignPolyfill()({}, SVG_DEFAULT_PROPS_CODE, overrides);'
       : '';
     const PROPS_NAME = SVG_DEFAULT_PROPS_CODE ? 'overrides' : 'props';
 
@@ -164,10 +164,10 @@ export default declare(({
             throw new TypeError('the "filename" option is required when transforming code');
           }
 
-          if (!path.scope.hasBinding('object.assign/shim')) {
+          if (!path.scope.hasBinding('object.assign/polyfill')) {
             const assignDeclaration = t.importDeclaration([
-              t.importDefaultSpecifier(t.identifier('objectAssignShim')),
-            ], t.stringLiteral('object.assign/shim'));
+              t.importDefaultSpecifier(t.identifier('objectAssignPolyfill')),
+            ], t.stringLiteral('object.assign/polyfill'));
 
             file.set('ensureObjectAssign', () => {
               const [newPath] = path.unshiftContainer('body', assignDeclaration);
