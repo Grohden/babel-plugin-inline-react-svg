@@ -27,12 +27,18 @@ export default declare(({
     SVG_DEFAULT_PROPS_CODE,
   }) => {
     const namedTemplate = `
-      var SVG_NAME = function SVG_NAME(props) { return SVG_CODE; };
+      var SVG_NAME = function SVG_NAME(props) { React.PureComponent.call(this, props); };
+      SVG_NAME.prototype = Object.create(React.PureComponent.prototype);
+      SVG_NAME.prototype.constructor = SVG_NAME;
+      SVG_NAME.prototype.render = function render() { var props = this.props; return SVG_CODE; };
       ${SVG_DEFAULT_PROPS_CODE ? 'SVG_NAME.defaultProps = SVG_DEFAULT_PROPS_CODE;' : ''}
       ${IS_EXPORT ? 'export { SVG_NAME };' : ''}
     `;
     const anonymousTemplate = `
-      var Component = function (props) { return SVG_CODE; };
+      var Component = function (props) { React.PureComponent.call(this, props); };
+      Component.prototype = Object.create(React.PureComponent.prototype);
+      Component.prototype.constructor = Component;
+      Component.prototype.render = function render() { var props = this.props; return SVG_CODE; };
       ${SVG_DEFAULT_PROPS_CODE ? 'Component.defaultProps = SVG_DEFAULT_PROPS_CODE;' : ''}
       Component.displayName = 'EXPORT_FILENAME';
       export default Component;
