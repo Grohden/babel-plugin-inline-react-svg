@@ -18,15 +18,17 @@ function assertMatchImport(name, matchRegex) {
 
 const assertReactImport = assertMatchImport('React', () => /import React from ['"]react['"]/g);
 
+const assertCreateReactClassImport = assertMatchImport('createReactClass', () => /import createReactClass from ['"]create-react-class['"]/g);
+
 function assertDefaultProps(shouldExist, result) {
-  const exists = (/\.defaultProps = /g).test(result.code);
+  const exists = (/getDefaultProps:/g).test(result.code);
 
   if (!exists && shouldExist) {
-    throw new Error('defaultProps needs to be present');
+    throw new Error('getDefaultProps needs to be present');
   }
 
   if (exists && !shouldExist) {
-    throw new Error('defaultProps shouldn\'t be present');
+    throw new Error('getDefaultProps shouldn\'t be present');
   }
 }
 
@@ -45,6 +47,7 @@ transformFile('test/fixtures/test-import.jsx', {
 }, (err, result) => {
   if (err) throw err;
   assertReactImport(result);
+  assertCreateReactClassImport(result);
   assertDefaultProps(true, result);
   validateDefaultProps(result);
   console.log('test/fixtures/test-import.jsx\n', result.code);
@@ -59,6 +62,7 @@ transformFile('test/fixtures/test-multiple-svg.jsx', {
 }, (err, result) => {
   if (err) throw err;
   assertReactImport(result);
+  assertCreateReactClassImport(result);
   assertDefaultProps(true, result);
   validateDefaultProps(result);
   console.log('test/fixtures/test-multiple-svg.jsx\n', result.code);
@@ -74,6 +78,7 @@ transformFile('test/fixtures/test-no-react.jsx', {
   if (err) throw err;
   console.log('test/fixtures/test-no-react.jsx\n', result.code);
   assertReactImport(result);
+  assertCreateReactClassImport(result);
   assertDefaultProps(true, result);
   validateDefaultProps(result);
 });
@@ -99,6 +104,7 @@ transformFile('test/fixtures/test-no-duplicate-react.jsx', {
   if (err) throw err;
   console.log('test/fixtures/test-no-duplicate-react.jsx\n', result.code);
   assertReactImport(result);
+  assertCreateReactClassImport(result);
   assertDefaultProps(true, result);
   validateDefaultProps(result);
 });
